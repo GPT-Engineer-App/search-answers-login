@@ -2,14 +2,14 @@ import { useState } from "react";
 import { Box, Button, FormControl, FormLabel, Heading, Input, Text, VStack, Link } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 
-const Index = () => {
+const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = async () => {
+  const handleSignUp = async () => {
     try {
-      const response = await fetch("https://backengine-e9sl.fly.dev/login", {
+      const response = await fetch("https://backengine-e9sl.fly.dev/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -18,10 +18,7 @@ const Index = () => {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem("accessToken", data.accessToken);
-        // Redirect to the main application page
-        window.location.href = "/app";
+        window.location.href = "/";
       } else {
         const errorData = await response.json();
         setError(errorData.error);
@@ -36,7 +33,7 @@ const Index = () => {
       <Box p={8} borderWidth={1} borderRadius="lg" boxShadow="lg" bg="white" width="400px">
         <VStack spacing={6} align="stretch">
           <Heading as="h1" size="xl" textAlign="center">
-            Login
+            Sign Up
           </Heading>
           <FormControl id="email">
             <FormLabel>Email address</FormLabel>
@@ -51,14 +48,14 @@ const Index = () => {
               {error}
             </Text>
           )}
-          <Button colorScheme="blue" onClick={handleLogin}>
-            Login
+          <Button colorScheme="blue" onClick={handleSignUp}>
+            Sign Up
           </Button>
         </VStack>
         <Text mt={4} textAlign="center">
-          Don't have an account?{" "}
-          <Link as={RouterLink} to="/signup" color="blue.500">
-            Sign Up
+          Already have an account?{" "}
+          <Link as={RouterLink} to="/" color="blue.500">
+            Login
           </Link>
         </Text>
       </Box>
@@ -66,4 +63,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default SignUp;
