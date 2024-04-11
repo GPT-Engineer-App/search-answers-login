@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { Box, Button, FormControl, FormLabel, Heading, Input, Text, VStack, Link } from "@chakra-ui/react";
+import { Box, Button, FormControl, FormLabel, Heading, Input, Text, VStack, Link, Select } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 
 const SignUp = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
   const [error, setError] = useState("");
 
   const handleSignUp = async () => {
@@ -14,7 +17,7 @@ const SignUp = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ firstName, lastName, email, password, role }),
       });
 
       if (response.ok) {
@@ -35,6 +38,14 @@ const SignUp = () => {
           <Heading as="h1" size="xl" textAlign="center">
             Sign Up
           </Heading>
+          <FormControl id="firstName">
+            <FormLabel>First Name</FormLabel>
+            <Input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+          </FormControl>
+          <FormControl id="lastName">
+            <FormLabel>Last Name</FormLabel>
+            <Input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+          </FormControl>
           <FormControl id="email">
             <FormLabel>Email address</FormLabel>
             <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -42,6 +53,15 @@ const SignUp = () => {
           <FormControl id="password">
             <FormLabel>Password</FormLabel>
             <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </FormControl>
+          <FormControl id="role">
+            <FormLabel>Role</FormLabel>
+            <Select value={role} onChange={(e) => setRole(e.target.value)}>
+              <option value="">Select a role</option>
+              <option value="teacher">Teacher</option>
+              <option value="student">Student</option>
+              <option value="admin">Admin</option>
+            </Select>
           </FormControl>
           {error && (
             <Text color="red.500" textAlign="center">
