@@ -10,14 +10,31 @@ const Navbar = () => {
         </Link>
       </Box>
       <Spacer />
-      <Box>
-        <Link as={RouterLink} to="/signup" mr={4}>
-          Sign Up
-        </Link>
-        <Link as={RouterLink} to="/">
-          Login
-        </Link>
-      </Box>
+      {localStorage.getItem("accessToken") ? (
+        <Box>
+          <Link as={RouterLink} to="/dashboard" mr={4}>
+            Dashboard
+          </Link>
+          <Link
+            onClick={() => {
+              localStorage.removeItem("accessToken");
+              localStorage.removeItem("user");
+              window.location.href = "/";
+            }}
+          >
+            Logout
+          </Link>
+        </Box>
+      ) : (
+        <Box>
+          <Link as={RouterLink} to="/signup" mr={4}>
+            Sign Up
+          </Link>
+          <Link as={RouterLink} to="/">
+            Login
+          </Link>
+        </Box>
+      )}
     </Flex>
   );
 };

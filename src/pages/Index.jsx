@@ -20,8 +20,8 @@ const Index = () => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("accessToken", data.accessToken);
-        // Redirect to the main application page
-        window.location.href = "/app";
+        localStorage.setItem("user", JSON.stringify(data.user));
+        window.location.href = "/dashboard";
       } else {
         const errorData = await response.json();
         setError(errorData.error);
