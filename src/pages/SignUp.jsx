@@ -7,10 +7,16 @@ const SignUp = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [verifyPassword, setVerifyPassword] = useState("");
   const [role, setRole] = useState("");
   const [error, setError] = useState("");
 
   const handleSignUp = async () => {
+    if (password !== verifyPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
     try {
       const response = await fetch("https://backengine-e9sl.fly.dev/signup", {
         method: "POST",
@@ -53,6 +59,10 @@ const SignUp = () => {
           <FormControl id="password">
             <FormLabel>Password</FormLabel>
             <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </FormControl>
+          <FormControl id="verifyPassword">
+            <FormLabel>Verify Password</FormLabel>
+            <Input type="password" value={verifyPassword} onChange={(e) => setVerifyPassword(e.target.value)} />
           </FormControl>
           <FormControl id="role">
             <FormLabel>Role</FormLabel>
